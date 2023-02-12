@@ -32,8 +32,8 @@ export const useFetchData = (endpoint: string) => {
         fetch(`${baseUrl}${endpoint}`, apiConfig)
             .then((res) => res.json())
             .then((data: any) => setPartialData({ status: apiStatus.success, data }))
-            .catch((err: any) => setPartialData({ status: apiStatus.error, error: JSON.stringify(err) }))
-    }, [endpoint])
+            .catch((err: any) => setPartialData({ status: apiStatus.error, error: JSON.stringify(err) }));
+    }, [endpoint]);
 
     return apiState;
 }
