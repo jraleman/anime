@@ -15,8 +15,9 @@ export const myAnimeListApiV2 = axios.create({
 });
 
 export const fetchAnimeList = async (username: string) => {
+    const fieldsToFetch = ['list_status','synopsis','genres', 'num_episodes'];
     let allData: any[] = [];
-    let nextUrl: string | null = `/users/${username}/animelist?limit=100&fields=list_status,synopsis`; // Start with a limit of 100 entries per request
+    let nextUrl: string | null = `/users/${username}/animelist?limit=100&fields=${fieldsToFetch.join(',')}`;
   
     while (nextUrl) {
       try {
@@ -38,4 +39,4 @@ export const fetchAnimeList = async (username: string) => {
       }
     }
     return allData;
-}
+};
