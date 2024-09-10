@@ -3,14 +3,8 @@
 
     export let animeList;
 
-    const getAnimeStatusColor = (status: string) => {
-        return animeStatusMap[status].color;
-    };
-
-    const getAnimeStatusLabel = (status: string) => {
-        return animeStatusMap[status].label;
-    };
-
+    const getAnimeStatusColor = (status: string) => animeStatusMap[status].color;
+    const getAnimeStatusLabel = (status: string) => animeStatusMap[status].label;
 </script>
 
 <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 py-8 mx-auto max-w-screen-xl lg:py-16 justify-items-center">
@@ -38,9 +32,18 @@
                     <kbd class="kbd kbd-md">{genre.name}</kbd>
                     {/each}
                 </div>
-                <button on:click={() => alert(anime.node.synopsis)} class="btn btn-primary">
-                    Synopsis
-                </button>
+                <!-- Modal -->
+                <label for={anime.node.id} class="btn btn-primary">Synopsis</label>
+                <input type="checkbox" id={anime.node.id} class="modal-toggle" />
+                <div class="modal" role="dialog">
+                  <div class="modal-box">
+                    <h3 class="text-lg font-bold">{anime.node.title}</h3>
+                    <p class="py-4">{anime.node.synopsis}</p>
+                    <div class="modal-action">
+                      <label for={anime.node.id} class="btn">Close</label>
+                    </div>
+                  </div>
+                </div>
             </div>
         </div>
     {/each}

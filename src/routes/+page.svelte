@@ -7,6 +7,7 @@
 	import ErrorIndicator from "$lib/components/ErrorIndicator.svelte";
 	import AnimeList from "$lib/components/AnimeList.svelte";
 	import AnimeStats from "$lib/components/AnimeStats.svelte";
+	import AnimeChart from "$lib/components/AnimeChart.svelte";
 
     let animeList = writable([]);
     let isLoading = writable(false);
@@ -31,8 +32,8 @@
     {/if}
     {#if $animeList && !$isLoading && !$error}
         <!-- TODO: Add Search Bar Component -->
-        <!-- TODO: Add Charts Component -->
         <svelte:component this={AnimeStats} {animeList} />
+        <svelte:component this={AnimeChart} {animeList} />
         <svelte:component this={AnimeList} {animeList} />
     {/if}
 </div>
