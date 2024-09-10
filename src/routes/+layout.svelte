@@ -1,11 +1,11 @@
 <script>
-    import "../app.css";
+  import '../app.css';
 </script>
 
-<style lang="postcss">
-    :global(html) {
-        background-color: theme(colors.gray.100);
-    }
-</style>
-
 <slot />
+
+<style lang="postcss">
+  :global(html) {
+    background-color: theme(colors.gray.100);
+  }
+</style>

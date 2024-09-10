@@ -9,8 +9,8 @@ export const GET: RequestHandler = async ({ params }) => {
     return new Response(JSON.stringify(animeList), {
       status: 200
     });
-  } catch (error) {
-    return new Response('Error fetching anime list', {
+  } catch (error: any) {
+    return new Response(error.message || 'Error fetching anime list', {
       status: 500
     });
   }
