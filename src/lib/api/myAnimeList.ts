@@ -14,7 +14,7 @@ export const myAnimeListApiV2 = axios.create({
     }
 });
 
-export const fetchAnimeList = async (username: string) => {
+export const fetchUserAnimeList = async (username: string) => {
     const fieldsToFetch = ['list_status','synopsis','genres', 'num_episodes'];
     let allData: any[] = [];
     let nextUrl: string | null = `/users/${username}/animelist?limit=100&fields=${fieldsToFetch.join(',')}`;
@@ -40,3 +40,18 @@ export const fetchAnimeList = async (username: string) => {
     }
     return allData;
 };
+
+export const fetchUserAnimeStats = async () => {
+    try {
+        const response = await myAnimeListApiV2.get(`/users/@me?fields=anime_statistics`);
+        return response.data;
+    } catch (error: any) {
+        if (error.response) {
+            throw new Error(`Error: ${error.response.status} - ${error.response.data.message}`);
+        } else if (error.request) {
+            throw new Error('No response from server');
+        } else {
+            throw new Error('Error in making request');
+        }
+    }
+}
