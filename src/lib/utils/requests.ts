@@ -1,4 +1,5 @@
 import { PUBLIC_MAL_USERNAME } from '$env/static/public';
+import { fetchUserAnimeList, fetchUserAnimeStats } from '$lib/api/myAnimeList';
 
 export type RequestProps = {
   username?: string;
@@ -11,11 +12,7 @@ export const fetchList = async ({ username = PUBLIC_MAL_USERNAME, onLoading, onE
   onLoading(true);
   onError(null);
   try {
-    const response = await fetch(`/api/anime/${username}`);
-    if (!response.ok) {
-      onError('Error fetching anime list');
-    }
-    const data = await response.json();
+    const data = await fetchUserAnimeList(username);
     onData(data);
   } catch (err: any) {
     onError(err.message);
@@ -28,11 +25,7 @@ export const fetchStats = async ({ onLoading, onError, onData }: RequestProps) =
   onLoading(true);
   onError(null);
   try {
-    const response = await fetch(`/api/anime/stats`);
-    if (!response.ok) {
-      onError('Error fetching stats');
-    }
-    const data = await response.json();
+    const data = await fetchUserAnimeStats();
     onData(data);
   } catch (err: any) {
     onError(err.message);

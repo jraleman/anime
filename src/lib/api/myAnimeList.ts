@@ -1,16 +1,13 @@
 import axios from 'axios';
-import { PUBLIC_MAL_BASE_URL } from '$env/static/public';
-import { PRIVATE_MAL_CLIENT_ID, PRIVATE_MAL_CLIENT_SECRET } from '$env/static/private';
+import { PUBLIC_MAL_BASE_URL, PUBLIC_MAL_CLIENT_ID } from '$env/static/public';
 
 const baseURL = PUBLIC_MAL_BASE_URL;
-const clientID = PRIVATE_MAL_CLIENT_ID;
-const clientSecret = PRIVATE_MAL_CLIENT_SECRET;
+const clientID = PUBLIC_MAL_CLIENT_ID;
 
 export const myAnimeListApiV2 = axios.create({
   baseURL,
   headers: {
-    'X-MAL-CLIENT-ID': clientID,
-    'X-MAL-CLIENT-SECRET': clientSecret
+    'X-MAL-CLIENT-ID': clientID
   }
 });
 
