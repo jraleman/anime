@@ -1,123 +1,71 @@
-# Anime
+# ANIME — アニメ視聴記録
 
-A SvelteKit web app that connects to your [MyAnimeList](https://myanimelist.net) account via the MAL API v2 and visualizes your anime list with stats, a genre breakdown chart, and a browsable card grid.
+A manga print-zine styled **personalized anime list viewer**, built as a fully static app
+for GitHub Pages. Everything on the site is one MyAnimeList user's own anime list — their
+recently seen anime, their top rated, their current-season titles, and search within their
+list — with stats and a genre breakdown computed from it. This is by design: the site is a
+personal watch log, not a general catalog browser, and should stay that way.
+
+It runs entirely in the browser — **no build step, no server, no configuration**. The only
+data fetched is the user's anime list, in a single MAL API v2 request (cached per username;
+every view is a client-side sort/filter of it). The API is used with a public client ID (the
+`MAL_CLIENT_ID` constant in `js/api.js` — register your own at
+[myanimelist.net/apiconfig](https://myanimelist.net/apiconfig) if you fork this). MAL sends
+no CORS headers, so requests go through [corsproxy.io](https://corsproxy.io), which is free
+for browser-originated requests and forwards the client-ID header.
+
+> This app replaced the original SvelteKit + MAL OAuth implementation that previously lived
+> in this repo — see the git history if you need it.
 
 ## Features
 
-- **Anime Stats** — shows completed, pending, and total episode counts
-- **Genre Chart** — doughnut chart breaking down genres across your entire list
-- **Anime Cards** — responsive grid with status badges, genre tags, episode count, and a synopsis modal
-- Deployed on [Render](https://render.com) as a Node.js web service
+- **My List** (default) — the anime they've completed, most recently watched first
+- **Top Rated** — the same completed anime, best MAL score first
+- **This Season** — entries from their list airing this season, any status (watching,
+  plan-to-watch, …)
+- **Search** — matches by title (or exact genre name) across their whole list, any status
+- **Username switcher** — the field in the header changes whose list the whole site shows
+  (the default is the `DEFAULT_USERNAME` constant in `js/app.js`, remembered in
+  `localStorage`); the page chrome — hero tagline, loading/empty states, tab title — speaks
+  about that viewer
+- **Lazy loading** — no pagination; cards render in chunks of 24 as you scroll
+  (IntersectionObserver), ending with a 完 marker
+- **Full-list stats** — title count, mean score, total episodes, and the genre split doughnut
+  are computed over each view's complete result set, never just the visible cards — the side
+  panel says what's covered
+- **Detail modal** — synopsis, facts (including their list status, episodes seen, and
+  personal score), genres, and a link to MyAnimeList
 
-## Tech Stack
+## Tech
 
-| Layer | Tool |
-|---|---|
-| Framework | [SvelteKit](https://kit.svelte.dev) |
-| Styling | [Tailwind CSS](https://tailwindcss.com) + [DaisyUI](https://daisyui.com) |
-| Charts | [Chart.js](https://www.chartjs.org) via [svelte-chartjs](https://github.com/SauravKanchan/svelte-chartjs) |
-| HTTP client | [Axios](https://axios-http.com) |
-| Adapter | `@sveltejs/adapter-node` |
-| Testing | Playwright (integration) + Vitest (unit) |
+| Layer  | Tool                                           |
+| ------ | ---------------------------------------------- |
+| Markup | Plain HTML, no framework                       |
+| Styles | Hand-rolled CSS (custom properties, no build)  |
+| Logic  | Vanilla ES2022 JavaScript                      |
+| Charts | [Chart.js](https://www.chartjs.org) via CDN    |
+| Data   | [MAL API v2](https://myanimelist.net/apiconfig/references/api/v2) via [corsproxy.io](https://corsproxy.io) |
 
-## Environment Variables
+## Run locally
 
-Create a `.env` file at the project root:
-
-```env
-PUBLIC_MAL_BASE_URL=https://api.myanimelist.net/v2
-PUBLIC_MAL_USERNAME=your_mal_username
-PRIVATE_MAL_CLIENT_ID=your_client_id
-PRIVATE_MAL_CLIENT_SECRET=your_client_secret
-```
-
-You can obtain a client ID and secret by registering an application at [myanimelist.net/apiconfig](https://myanimelist.net/apiconfig).
-
-## Getting Started
-
-### Install dependencies
+It's static — any file server works:
 
 ```bash
-npm install
+npx serve
+# or
+python3 -m http.server 8080
 ```
 
-### Development
+## Deploy to GitHub Pages
 
-```bash
-npm run dev
+The app lives at the repo root and all paths are relative, so it works at any subpath
+(`https://<user>.github.io/<repo>/`). In the repo settings:
 
-# open in browser automatically
-npm run dev -- --open
-```
+*Pages → Source: Deploy from a branch → `main` / `/ (root)`*
 
-### Build
+The `.nojekyll` file is already in place so GitHub serves the files as-is.
 
-```bash
-npm run build
-```
+## Credits
 
-Preview the production build locally:
-
-```bash
-npm run preview
-```
-
-### Lint & format
-
-```bash
-npm run lint
-npm run format
-```
-
-### Tests
-
-```bash
-npm run test              # integration + unit
-npm run test:integration  # Playwright
-npm run test:unit         # Vitest
-```
-
-## API Routes
-
-| Method | Path | Description |
-|---|---|---|
-| GET | `/api/anime/:username` | Fetches the full paginated anime list for a MAL user |
-| GET | `/api/anime/stats` | Fetches anime statistics for the authenticated user |
-
-## Project Structure
-
-```
-src/
-  lib/
-    api/
-      myAnimeList.ts      # Axios client + MAL API helpers
-    components/
-      AnimeChart.svelte   # Genre doughnut chart
-      AnimeList.svelte    # Card grid with synopsis modals
-      AnimeStats.svelte   # Completed / pending / episode stats
-      AppTitle.svelte
-      ErrorIndicator.svelte
-      LoadingIndicator.svelte
-    utils/
-      colors.ts           # Chart color palettes
-      mappings.ts         # Status → label/color mappings
-      requests.ts         # Client-side fetch wrappers
-  routes/
-    +page.svelte          # Main page
-    api/anime/
-      [username]/+server.ts
-      stats/+server.ts
-```
-
-## Deployment
-
-The app is configured for Render via `render.yaml`:
-
-```yaml
-buildCommand: npm install && npm run build
-startCommand: node build/index.js
-```
-
-## References
-
-- [MyAnimeList API v2 reference](https://myanimelist.net/apiconfig/references/api/v2)
+Data from the [MyAnimeList](https://myanimelist.net) API.
+Fonts: Anton, Hanken Grotesk, IBM Plex Mono, Noto Sans JP (Google Fonts).

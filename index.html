@@ -1,46 +1,205 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="refresh" content="2; url =https://anime-7jl1.onrender.com" />
-    <title>Anime</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>ANIME — the watch log zine</title>
+    <meta
+      name="description"
+      content="A manga-zine styled viewer for a MyAnimeList user's anime list — recently seen, top rated, this season, and search, with stats and a genre breakdown."
+    />
+    <link rel="icon" href="data:image/svg+xml,&lt;svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'&gt;&lt;rect width='100' height='100' fill='%23e63b2e'/&gt;&lt;text y='72' x='50' text-anchor='middle' font-size='58' font-family='sans-serif' font-weight='900' fill='%23faf6ee'&gt;ア&lt;/text&gt;&lt;/svg&gt;" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Anton&family=Hanken+Grotesk:ital,wght@0,400;0,500;0,700;0,800;1,400&family=IBM+Plex+Mono:wght@400;500;700&family=Noto+Sans+JP:wght@500;900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/style.css" />
   </head>
-  <body class="bg-gray-900 text-gray-200 text-center">
-    <h1 class="text-3xl font-bold m-10">Redirecting to my anime view list</h1>
-    <div class="flex items-center justify-center p-4 mb-4">
-      <div role="status">
-        <svg
-          aria-hidden="true"
-          class="w-8 h-8 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"
-          viewBox="0 0 100 101"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
+
+  <body>
+    <!-- ── Ticker ─────────────────────────────────────────── -->
+    <div class="ticker" aria-hidden="true">
+      <div class="ticker__track">
+        <span
+          >アニメ百科 ✦ ANIME ✦ 視聴済 ✦ MY LIST ✦ TOP RATED ✦ 今期アニメ ✦ THIS
+          SEASON ✦ GENRE INDEX ✦ 検索 ✦ SEARCH THE LOG ✦</span
+        ><span
+          >アニメ百科 ✦ ANIME ✦ 視聴済 ✦ MY LIST ✦ TOP RATED ✦ 今期アニメ ✦ THIS
+          SEASON ✦ GENRE INDEX ✦ 検索 ✦ SEARCH THE LOG ✦</span
         >
-          <path
-            d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
-            fill="currentColor"
-          />
-          <path
-            d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
-            fill="currentFill"
-          />
-        </svg>
-        <span class="sr-only">Loading...</span>
       </div>
     </div>
-    <p><strong>Note:</strong> If your browser supports refresh, you'll be redirected to the app in about 5 seconds.</p>
-    <div id="redirect-btn" class="m-10">
-      <a href="https://anime-7jl1.onrender.com" class="btn btn-secondary">Click here to redirect to the app</a>
-    </div>
-    <script>
-      var redirectBtn = document.getElementById('redirect-btn');
-      redirectBtn.style.visibility = 'hidden';
-      function showRedirectBtn() {
-        redirectBtn.style.visibility = 'visible';
-      }
-      setTimeout('showRedirectBtn()', 5000);
-    </script>
+
+    <!-- ── Masthead ───────────────────────────────────────── -->
+    <header class="masthead">
+      <div class="masthead__inner">
+        <a class="brand" href="./" aria-label="ANIME — home">
+          <span class="brand__stamp" aria-hidden="true">ア</span>
+          <span class="brand__word">
+            ANI<em>ME</em>
+            <small>アニメ視聴記録 — the watch log zine</small>
+          </span>
+        </a>
+
+        <nav class="tabs" aria-label="Browse">
+          <button class="tab is-active" data-view="mylist" type="button">
+            <span class="tab__jp" aria-hidden="true">視聴済</span>My List
+          </button>
+          <button class="tab" data-view="top" type="button">
+            <span class="tab__jp" aria-hidden="true">人気</span>Top Rated
+          </button>
+          <button class="tab" data-view="seasonal" type="button">
+            <span class="tab__jp" aria-hidden="true">今期</span>This Season
+          </button>
+        </nav>
+
+        <form class="search search--user" id="user-form">
+          <span class="search__jp" aria-hidden="true">視聴者</span>
+          <input
+            id="user-input"
+            type="text"
+            placeholder="MAL username…"
+            autocomplete="off"
+            spellcheck="false"
+            aria-label="MyAnimeList username"
+          />
+          <button type="submit" aria-label="Load this user's list">✓</button>
+        </form>
+
+        <form class="search" id="search-form" role="search">
+          <span class="search__jp" aria-hidden="true">検索</span>
+          <input
+            id="search-input"
+            type="search"
+            placeholder="Search their list…"
+            autocomplete="off"
+            aria-label="Search anime"
+          />
+          <button type="submit" aria-label="Search">→</button>
+        </form>
+      </div>
+    </header>
+
+    <!-- ── Hero ───────────────────────────────────────────── -->
+    <section class="hero" aria-hidden="true">
+      <div class="hero__lines"></div>
+      <h1 class="hero__title">
+        <span class="hero__row">EVERY</span>
+        <span class="hero__row hero__row--red">ANIME,</span>
+        <span class="hero__row"
+          ><span id="hero-verb">LOGGED</span><span class="hero__dot">.</span></span
+        >
+      </h1>
+      <p class="hero__caption" id="hero-caption">
+        ISSUE <b>No.042</b>
+        <span id="hero-tagline">─ the complete watch log — via the MyAnimeList API</span>
+      </p>
+      <span class="hero__vertical">アニメ視聴記録</span>
+    </section>
+
+    <!-- ── Main ───────────────────────────────────────────── -->
+    <main class="layout">
+      <!-- Side panel: stats + genre chart -->
+      <aside class="panel" aria-label="Page statistics">
+        <h2 class="panel__heading">
+          <span id="stats-jp" aria-hidden="true">記録</span>
+          <span id="stats-heading">Watch Log</span>
+        </h2>
+
+        <dl class="stats">
+          <div class="stat">
+            <dt id="stat-count-label">Titles Seen</dt>
+            <dd id="stat-count">—</dd>
+          </div>
+          <div class="stat">
+            <dt>Mean Score</dt>
+            <dd id="stat-score">—</dd>
+          </div>
+          <div class="stat">
+            <dt id="stat-eps-label">Eps Watched</dt>
+            <dd id="stat-episodes">—</dd>
+          </div>
+        </dl>
+
+        <h2 class="panel__heading">
+          <span id="genre-jp" aria-hidden="true">好み</span>
+          <span id="genre-heading">Their Taste</span>
+        </h2>
+        <div class="chart-box">
+          <canvas id="genre-chart" aria-label="Doughnut chart of genres on this page" role="img"></canvas>
+        </div>
+        <ol class="genre-legend" id="genre-legend"></ol>
+
+        <p class="panel__note" id="panel-note">Loading the full list…</p>
+      </aside>
+
+      <!-- Results -->
+      <section class="results" aria-label="Anime results">
+        <div class="results__bar">
+          <h2 class="results__title" id="results-title">My List</h2>
+        </div>
+
+        <div class="status status--loading" id="loading" hidden>
+          <span class="status__jp" aria-hidden="true">ロード中</span>
+          <span
+            ><span id="loading-text">LOADING</span><i class="dots"><b>.</b><b>.</b><b>.</b></i></span
+          >
+        </div>
+
+        <div class="status status--error" id="error" hidden>
+          <span class="status__jp" aria-hidden="true">エラー</span>
+          <p id="error-message">Something went wrong.</p>
+          <button id="retry" type="button">Retry ↻</button>
+        </div>
+
+        <ul class="grid" id="grid"></ul>
+
+        <div class="sentinel" id="sentinel" hidden>
+          <span aria-hidden="true">ロード中</span> LOADING MORE<i class="dots"
+            ><b>.</b><b>.</b><b>.</b></i
+          >
+        </div>
+        <p class="list-end" id="list-end" hidden>
+          <span aria-hidden="true">完</span> END OF LIST
+        </p>
+      </section>
+    </main>
+
+    <!-- ── Detail modal ───────────────────────────────────── -->
+    <dialog class="modal" id="modal">
+      <article class="modal__panel">
+        <button class="modal__close" id="modal-close" type="button" aria-label="Close">✕</button>
+        <div class="modal__media">
+          <img id="modal-image" alt="" />
+          <span class="modal__score" id="modal-score"></span>
+        </div>
+        <div class="modal__body">
+          <p class="modal__kicker" id="modal-kicker"></p>
+          <h3 class="modal__title" id="modal-title"></h3>
+          <ul class="modal__facts" id="modal-facts"></ul>
+          <ul class="modal__genres" id="modal-genres"></ul>
+          <h4 class="modal__label"><span aria-hidden="true">あらすじ</span> Synopsis</h4>
+          <p class="modal__synopsis" id="modal-synopsis"></p>
+          <a class="modal__link" id="modal-link" target="_blank" rel="noopener noreferrer">
+            View on MyAnimeList ↗
+          </a>
+        </div>
+      </article>
+    </dialog>
+
+    <!-- ── Footer ─────────────────────────────────────────── -->
+    <footer class="footer">
+      <p>
+        <b>ANIME</b> — printed on the web, no servers harmed.
+        Data from the <a href="https://myanimelist.net" target="_blank" rel="noopener noreferrer">MyAnimeList</a> API.
+      </p>
+      <span class="footer__stamp" aria-hidden="true">完</span>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/app.js"></script>
   </body>
 </html>
