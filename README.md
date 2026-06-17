@@ -11,8 +11,10 @@ data fetched is the user's anime list, in a single MAL API v2 request (cached pe
 every view is a client-side sort/filter of it). The API is used with a public client ID (the
 `MAL_CLIENT_ID` constant in `js/api.js` — register your own at
 [myanimelist.net/apiconfig](https://myanimelist.net/apiconfig) if you fork this). MAL sends
-no CORS headers, so requests go through [corsproxy.io](https://corsproxy.io), which is free
-for browser-originated requests and forwards the client-ID header.
+no CORS headers, so requests go through a CORS proxy that forwards the client-ID header —
+the `PROXIES` list in `js/api.js`, tried in order. Public free proxies are flaky; for a
+reliable setup deploy your own ~40-line Cloudflare Worker (see `proxy-worker/README.md`)
+and put it first in that list.
 
 > This app replaced the original SvelteKit + MAL OAuth implementation that previously lived
 > in this repo — see the git history if you need it.
@@ -44,7 +46,7 @@ for browser-originated requests and forwards the client-ID header.
 | Styles | Hand-rolled CSS (custom properties, no build)  |
 | Logic  | Vanilla ES2022 JavaScript                      |
 | Charts | [Chart.js](https://www.chartjs.org) via CDN    |
-| Data   | [MAL API v2](https://myanimelist.net/apiconfig/references/api/v2) via [corsproxy.io](https://corsproxy.io) |
+| Data   | [MAL API v2](https://myanimelist.net/apiconfig/references/api/v2) via a CORS proxy |
 
 ## Run locally
 
